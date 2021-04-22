@@ -7,6 +7,8 @@ import vk_api
 LOGIN = os.environ.get('login')
 PASSWORD = os.environ.get('password')
 OWNER_ID = os.environ.get('appID')
+PORT = int(os.environ.get('PORT', 5000))
+TOKEN = os.environ.get('TgVKBotToken')
 
 
 def generate_token():
@@ -27,13 +29,16 @@ def copy_msg(bot: Bot, update: Update):
 
 def main():
     bot = Bot(
-        token=os.environ.get('TgVKBotToken'),
+        TOKEN,
     )
-    updater = Updater(bot=bot)
+    updater = Updater(bot=bot, use_context=True)
     message_handler = MessageHandler(Filters.text, copy_msg)
     updater.dispatcher.add_handler(message_handler)
 
-    updater.start_polling()
+    updater.start_webhook(listen="0.0.0.0",
+                          port=int(PORT),
+                          url_path=TOKEN)
+    updater.bot.setWebhook('https://tg-vk-message.herokuapp.com/' + TOKEN)
     updater.idle()
 
 
