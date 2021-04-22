@@ -4,11 +4,11 @@ from telegram.ext import Updater, MessageHandler, Filters
 import requests
 import vk_api
 
-LOGIN = os.environ.get('login')
-PASSWORD = os.environ.get('password')
-OWNER_ID = os.environ.get('appID')
+LOGIN = str(os.environ.get('login'))
+PASSWORD = str(os.environ.get('password'))
+OWNER_ID = str(os.environ.get('appID'))
 PORT = int(os.environ.get('PORT', 5000))
-TOKEN = os.environ.get('TgVKBotToken')
+TOKEN = str(os.environ.get('TgVKBotToken'))
 
 
 def generate_token():
