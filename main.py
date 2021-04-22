@@ -29,7 +29,7 @@ def copy_msg(bot: Bot, update: Update):
                            f"message={text}&access_token={token}&v=5.130")
     request.close()
     data = request.json()
-    logger.log(data)
+    logger.info(data)
 
 
 def main():
