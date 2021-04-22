@@ -3,6 +3,7 @@ from telegram import Bot, Update
 from telegram.ext import Updater, MessageHandler, Filters
 import requests
 import vk_api
+import logging
 
 LOGIN = os.environ.get('login')
 PASSWORD = os.environ.get('password')
@@ -18,13 +19,16 @@ def generate_token():
 
 
 def copy_msg(bot: Bot, update: Update):
-    text = update.channel_post.text
-    token = generate_token()
-    request = requests.get(f"https://api.vk.com/method/wall.post?owner_id={OWNER_ID}&from_group=1&"
-                           f"message={text}&access_token={token}&v=5.130")
-    request.close()
-    data = request.json()
-    print(data)
+    try:
+        text = update.channel_post.text
+        token = generate_token()
+        request = requests.get(f"https://api.vk.com/method/wall.post?owner_id={OWNER_ID}&from_group=1&"
+                               f"message={text}&access_token={token}&v=5.130")
+        request.close()
+        data = request.json()
+        print(data)
+    except Exception:
+        bot.send_message(chat_id=439349318, text="Fuck")
 
 
 def main():
