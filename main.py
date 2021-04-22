@@ -29,7 +29,7 @@ def copy_msg(bot: Bot, update: Update):
 
 def main():
     bot = Bot(
-        TOKEN,
+        token=TOKEN,
     )
     updater = Updater(bot=bot)
     message_handler = MessageHandler(Filters.text, copy_msg)
