@@ -8,7 +8,7 @@ import vk_api
 LOGIN = str(os.environ.get('login'))
 PASSWORD = str(os.environ.get('password'))
 OWNER_ID = int(os.environ.get('communityID')) * (-1)
-PORT = int(os.environ.get('PORT', 80))
+PORT = int(os.environ.get('PORT', 8443))
 TOKEN = str(os.environ.get('TgVKBotToken'))
 
 
@@ -33,8 +33,8 @@ def main():
 
     updater.start_webhook(listen="0.0.0.0",
                           port=int(PORT),
-                          url_path=TOKEN)
-    updater.bot.setWebhook(f'https://tg-vk-message.herokuapp.com/{TOKEN}')
+                          url_path=TOKEN,
+                          webhook_url=f'https://tg-vk-message.herokuapp.com/{TOKEN}')
     updater.idle()
 
 
