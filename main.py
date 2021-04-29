@@ -8,7 +8,7 @@ import vk_api
 LOGIN = str(os.environ.get('login'))
 PASSWORD = str(os.environ.get('password'))
 OWNER_ID = int(os.environ.get('communityID')) * (-1)
-PORT = int(os.environ.get('PORT', 8443))
+PORT = int(os.environ.get('PORT', 80))
 TOKEN = str(os.environ.get('TgVKBotToken'))
 
 
