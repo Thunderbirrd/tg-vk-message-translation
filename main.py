@@ -1,6 +1,6 @@
 import os
-from telegram import Bot, Update
-from telegram.ext import Updater, MessageHandler, Filters
+from telegram import Update
+from telegram.ext import Updater, MessageHandler, Filters, CallbackContext
 import requests
 import vk_api
 
@@ -18,7 +18,7 @@ def generate_token(login, password):
     return dict(vk_session.token).get('access_token')
 
 
-def copy_msg(bot: Bot, update: Update):
+def copy_msg(update: Update, _: CallbackContext):
     text = update.channel_post.text
     token = generate_token(LOGIN, PASSWORD)
     request = requests.get(f"https://api.vk.com/method/wall.post?owner_id={OWNER_ID}&from_group=1&"
@@ -27,11 +27,8 @@ def copy_msg(bot: Bot, update: Update):
 
 
 def main():
-    bot = Bot(
-        token=TOKEN,
-    )
-    updater = Updater(bot=bot)
-    message_handler = MessageHandler(Filters.text, copy_msg)
+    updater = Updater(token=TOKEN)
+    message_handler = MessageHandler(Filters.text & ~Filters.command, copy_msg)
     updater.dispatcher.add_handler(message_handler)
 
     updater.start_webhook(listen="0.0.0.0",
