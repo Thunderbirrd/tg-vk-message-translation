@@ -2,7 +2,7 @@ import os
 from telegram import Bot, Update
 from telegram.ext import Updater, MessageHandler, Filters
 import requests
-import vk_api
+from token import generate_token
 import logging
 
 logging.basicConfig(level=logging.INFO,
@@ -16,15 +16,9 @@ PORT = int(os.environ.get('PORT', 8443))
 TOKEN = str(os.environ.get('TgVKBotToken'))
 
 
-def generate_token():
-    vk_session = vk_api.VkApi(LOGIN, PASSWORD)
-    vk_session.auth()
-    return dict(vk_session.token).get('access_token')
-
-
 def copy_msg(bot: Bot, update: Update):
     text = update.channel_post.text
-    token = generate_token()
+    token = generate_token(LOGIN, PASSWORD)
     request = requests.get(f"https://api.vk.com/method/wall.post?owner_id={OWNER_ID}&from_group=1&"
                            f"message={text}&access_token={token}&v=5.130")
     request.close()
