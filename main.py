@@ -18,7 +18,7 @@ TOKEN = str(os.environ.get('TgVKBotToken'))
 
 def generate_token():
     vk_session = vk_api.VkApi(LOGIN, PASSWORD)
-    vk_session.auth(token_only=True)
+    vk_session.auth()
     return dict(vk_session.token).get('access_token')
 
 
